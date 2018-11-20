@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'table_print'
+require 'byebug'
+require_relative '../lib/core_ext'
+require_relative '../lib/client'
+require_relative '../lib/application'
+require_relative '../lib/report'
+
+HTTPI.log = false
+
+filter = {}
+maxResult = 1000
+opt_parser = OptionParser.new do |parser|
+  parser.banner = "Usage: betfair COMMAND [OPTIONS]"
+  parser.separator ""
+
+  parser.separator "Commands"
+  parser.separator "    events: Returns a list of Events (i.e, Reading vs. Man United) associated with the markets selected by the MarketFilter. example: betfair events available options"
+  parser.separator '    catalog: Returns a list of information about published (ACTIVE/SUSPENDED) markets that does not change (or changes very rarely). You use listMarketCatalogue to retrieve the name of the market, the names of selections and other information about markets.  Market Data Request Limits apply to requests made to listMarketCatalogue. Please note: listMarketCatalogue does not return markets that are CLOSED. example: betfair catalog'  
+  parser.separator '    book: Returns a list of dynamic data about markets. Dynamic data includes prices, the status of the market, the status of selections, the traded volume, and the status of any orders you have placed in the market. Please note: Separate requests should be made for OPEN & CLOSED markets. Request that include both OPEN & CLOSED markets will only return those markets that are OPEN.'
+  parser.separator ''
+
+  parser.separator "Options"
+  parser.separator "betfair events"
+  parser.on("-c", "--countries COUNTRIES", "Restrict to markets that are in the specified country or countries. Use with two digits countrycode separated by comma. example: betfair events -c IT,UK") do |countries|
+    filter[:marketCountries] = countries.split(",")
+  end
+  parser.on('-q', '--textQuery TEXT', "use with any text to restrict search to Name, Event, Competition, etc. You can include a wildcard (*) character as long as it is not the first character. example: betfair events -q Brazil") do |text|
+    filter[:textQuery] = text
+  end
+  parser.separator '    -e, --eventIds                   IDs Restrict markets by the event id associated with the market. Numeric arguments separated by comma. example: betfair events -e 28963077,28988963'
+  parser.separator ''
+
+  parser.separator 'betfair catalog'
+  parser.on('-x', '--maxResults INTEGER', 'Limit on the total number of results returned, must be greater than 0 and less than or equal to 1000. example: betfair catalog -r 90') do |integer|
+    maxResult = integer
+  end 
+  parser.separator'    -m, --marketIds IDs              Restrict markets by the market id associated with the market. Numeric arguments separated by comma. example: betfair catalog -m 1.145994605,1.150593750'
+  parser.on('-e', '--eventIds IDs', 'Restrict markets by the event id associated with the market. Numeric arguments separated by comma. example: betfair catalogue -e 28963077,28988963') do |ids|
+    filter[:eventIds] = ids.split(',')
+  end
+  parser.separator ''
+
+  parser.separator 'betfair book'
+  parser.on('-m', '--marketIds IDs', 'Restrict markets by the market id associated with the market. Numeric arguments separated by comma. example: betfair book -m 1.145994605,1.150593750') do |ids|
+    filter[:marketIds] = ids.split(',')
+  end
+  parser.separator ''
+
+  parser.separator 'betfair monitor'
+  parser.separator '    -m, --marketIDs                  IDs Restrict markets by the event id associated with the market. Numeric arguments separated by comma. example: betfair events -e 28963077,28988963'
+  parser.on('-s', '--selectionIDs IDs', 'Restrict markets by the unique id for the selection. Numeric arguments separated by comma. example: betfair monitor -s 31162') do |ids|
+    filter[:selectionIds] = ids.split(',')
+  end
+end
+
+opt_parser.parse!
+
+client = Client.new(ENV['BETFAIR_EMAIL','BETFAIR_PW'])
+report = Report.new(client, filter)
+case ARGV[0]
+when "events"
+  report.events
+when 'catalog'
+  report.catalog
+when 'book'
+  report.books_report
+when 'monitor'
+  report.monitor
+else
+  puts opt_parser
+end
