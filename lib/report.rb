@@ -1,11 +1,12 @@
 class Report
-  def initialize(client, filter)
-    @client = client
-    @filter = filter
+  def initialize(client, filter, results)
+#    @client = client
+#    @filter = filter
+#    @maxResults = results
   end
 
-  def events(filter)
-    events = @client.list_events({:filter => filter})
+  def events
+    events = @client.list_events({:filter => @filter})
     tp events.flat_structure, :id, :name, :countryCode, :timezone, :marketCount
   end
 
@@ -28,15 +29,25 @@ class Report
     end
   end
 
-  def catalog(filter, maxResult)
-    filter.merge!({marketTypeCodes: ["MATCH_ODDS"]})
-    result = @client.list_market_catalogue({:filter => filter,:maxResults => maxResult,:marketProjection => ["RUNNER_DESCRIPTION","EVENT"]})
+  def catalog
+    @filter.merge!({marketTypeCodes: ["MATCH_ODDS"]})
+    result = @client.list_market_catalogue({:filter => @filter,:maxResults => @maxResult,:marketProjection => ["RUNNER_DESCRIPTION","EVENT"]})
     tp result, "marketId", "marketName", "totalMatched", "eventName" => lambda{|hash| hash['event']['name']}
   end
 
-  def monitor(filter)
+  def monitor
     # betfair monitor -m 1.149127014 -s 31162,10372411   
-    raise ArgumentError, "Market and RunnerIds are required to monitor runners" if filter[:marketIds].nil? || filter[:selectionIds].nil?
-    puts books
+    raise ArgumentError, "Market and RunnerIds are required to monitor runners" if @filter[:marketIds].nil? || @filter[:selectionIds].nil?
+    loop do
+      sleep @filter[:minutesInterval].minutes
+      books
+    end
   end
+  
+  def verify_prices; 
+  end 
+
+  def notify?; @filter[:targetPrice] <= max_price; end
+  def max_price; @books.first["runners"].filter_by(selection_id).to_lay; end
+  def selection_id; @filter[:selectionId].to_i; end
 end

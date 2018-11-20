@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'active_support/all'
 require 'optparse'
 require 'table_print'
 require 'byebug'
@@ -56,15 +57,15 @@ end
 
 opt_parser.parse!
 
-client = Client.new(ENV['BETFAIR_EMAIL'],ENV['BETFAIR_PW'])
-report = Report.new(client, filter)
+client = Client.new(ENV['BETFAIR_EMAIL'],ENV['BETFAIR_PW'], ENV['BETFAIR_APPLICATION_CODE'])
+data = Data.new(client, filter, maxResults)
 case ARGV[0]
 when "events"
   report.events
 when 'catalog'
   report.catalog
 when 'book'
-  report.books_report
+  Report.new(data).books_report
 when 'monitor'
   report.monitor
 else

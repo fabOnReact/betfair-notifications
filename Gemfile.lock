@@ -43,6 +43,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   betfair-ng
   byebug
   rake
