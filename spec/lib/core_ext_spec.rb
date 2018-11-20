@@ -39,6 +39,17 @@ describe Hash do
  end
 end
 
+describe String do
+  describe '.header' do 
+    it 'create a string of header' do 
+      header = "-"*30 + "title" + "-"*30
+      expect(String.header("title")).to eql header
+    end
+  end
+end
+
+
+
   # describe '#runners_format' do 
   #   it 'returns a hash with selected params' do 
   #     class Hash; def filter_fields(index);{"b1" => 1, "b2" => 2};end;end

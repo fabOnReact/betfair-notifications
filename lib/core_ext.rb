@@ -38,8 +38,12 @@ class Hash
 end
 
 class String
-  def self.line(title)
-    "----------------------#{title}--------------------" 
+  def self.header(title)
+    line + title + line
+  end
+
+  def self.line
+    "-"*30
   end
 end
 

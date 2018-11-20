@@ -1,5 +1,6 @@
 class Report
-  def initialize(client, filter, results)
+  def initialize(data)
+    @data = data
 #    @client = client
 #    @filter = filter
 #    @maxResults = results
@@ -10,19 +11,21 @@ class Report
     tp events.flat_structure, :id, :name, :countryCode, :timezone, :marketCount
   end
 
-  def books
-    @books = @client.list_market_book(@filter.merge_projections!)
-  end
+  #def books
+  #  @books = @client.list_market_book(@filter.merge_projections!)
+  #end
+  def books; @data.books; end
+  def runners; @data.runners; end
 
+  # betfair book -m 1.149127014 
   def books_report
-    # betfair book -m 1.149127014 
     raise ArgumentError, "MarketId is required to query the book api" if @filter[:marketIds].nil?
     tp books, :marketId, :status, :totalMatched, :totalAvailable 
-    runners_report if @books.size == 1 && @runners = @books.first["runners"]
+    runners_report if books.size == 1 && runners
   end
 
   def runners_report
-    puts String.line("RUNNERS INFORMATION")
+    puts String.header("RUNNERS INFORMATION")
     @runners.each do |runner|
       puts String.line("selection id #{runner['selectionId']}")
       tp runner["ex"]["availableToLay"]

@@ -3,14 +3,15 @@ require 'active_support/all'
 require 'optparse'
 require 'table_print'
 require 'byebug'
-require_relative '../lib/core_ext'
 require_relative '../lib/client'
 require_relative '../lib/report'
+require_relative '../lib/data'
+require_relative '../lib/core_ext'
 
 HTTPI.log = false
 
 filter = {}
-maxResult = 1000
+maxResults = 1000
 opt_parser = OptionParser.new do |parser|
   parser.banner = "Usage: betfair COMMAND [OPTIONS]"
   parser.separator ""
@@ -57,8 +58,9 @@ end
 
 opt_parser.parse!
 
+# move to controller
 client = Client.new(ENV['BETFAIR_EMAIL'],ENV['BETFAIR_PW'], ENV['BETFAIR_APPLICATION_CODE'])
-data = Data.new(client, filter, maxResults)
+data = Model.new(client, filter, maxResults)
 case ARGV[0]
 when "events"
   report.events
