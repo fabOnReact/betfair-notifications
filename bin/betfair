@@ -4,7 +4,6 @@ require 'table_print'
 require 'byebug'
 require_relative '../lib/core_ext'
 require_relative '../lib/client'
-require_relative '../lib/application'
 require_relative '../lib/report'
 
 HTTPI.log = false
@@ -57,7 +56,7 @@ end
 
 opt_parser.parse!
 
-client = Client.new(ENV['BETFAIR_EMAIL','BETFAIR_PW'])
+client = Client.new(ENV['BETFAIR_EMAIL'],ENV['BETFAIR_PW'])
 report = Report.new(client, filter)
 case ARGV[0]
 when "events"
