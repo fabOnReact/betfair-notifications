@@ -1,25 +1,17 @@
 class Report
-  def initialize(data)
-    @data = data
-#    @client = client
-#    @filter = filter
-#    @maxResults = results
-  end
-
-  def events
-    events = @client.list_events({:filter => @filter})
+  def initialize(data); @data = data; end
+  def events_report
     tp events.flat_structure, :id, :name, :countryCode, :timezone, :marketCount
   end
 
-  #def books
-  #  @books = @client.list_market_book(@filter.merge_projections!)
-  #end
-  def books; @data.books; end
-  def runners; @data.runners; end
+  %w(events catalog books filter).each do |method|
+    class_eval "def #{method}; @data.#{method}; end"
+  end
 
+  def runners; @runners = @data.runners; end
   # betfair book -m 1.149127014 
   def books_report
-    raise ArgumentError, "MarketId is required to query the book api" if @filter[:marketIds].nil?
+    raise ArgumentError, "MarketId is required to query the book api" if filter[:marketIds].nil?
     tp books, :marketId, :status, :totalMatched, :totalAvailable 
     runners_report if books.size == 1 && runners
   end
@@ -27,19 +19,18 @@ class Report
   def runners_report
     puts String.header("RUNNERS INFORMATION")
     @runners.each do |runner|
-      puts String.line("selection id #{runner['selectionId']}")
-      tp runner["ex"]["availableToLay"]
+      runner.message
+      puts String.header runner.message
+      tp runner.lay_prices
     end
   end
 
-  def catalog
-    @filter.merge!({marketTypeCodes: ["MATCH_ODDS"]})
-    result = @client.list_market_catalogue({:filter => @filter,:maxResults => @maxResult,:marketProjection => ["RUNNER_DESCRIPTION","EVENT"]})
-    tp result, "marketId", "marketName", "totalMatched", "eventName" => lambda{|hash| hash['event']['name']}
+  def catalog_report
+    tp catalog, "marketId", "marketName", "totalMatched", "eventName" => lambda{|hash| hash['event']['name']}
   end
 
+  # betfair monitor -m 1.149127014 -s 31162,10372411   
   def monitor
-    # betfair monitor -m 1.149127014 -s 31162,10372411   
     raise ArgumentError, "Market and RunnerIds are required to monitor runners" if @filter[:marketIds].nil? || @filter[:selectionIds].nil?
     loop do
       sleep @filter[:minutesInterval].minutes

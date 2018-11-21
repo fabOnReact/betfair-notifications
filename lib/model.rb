@@ -1,9 +1,9 @@
 class Model
-  attr_reader :books
-  def initialize(client, filter, results)
+  attr_reader :books, :filter, :catalog, :events
+  def initialize(client, custom_parser)
     @client = client
-    @filter = filter
-    @maxResults = results
+    @filter = custom_parser.filter
+    @maxResults = custom_parser.maxResults
   end
 
   def events; @events = @client.list_events({:filter => @filter}); end
@@ -13,4 +13,12 @@ class Model
   end
 
   def runners; @runners = @books.first["runners"]; end
+
+  def catalog_filter
+    @filter.merge!({marketTypeCodes: ["MATCH_ODDS"]})
+  end
+  
+  def catalog
+    @catalog = @client.list_market_catalogue({:filter => catalog_filter,:maxResults => @maxResults,:marketProjection => ["RUNNER_DESCRIPTION","EVENT"]})
+  end
 end

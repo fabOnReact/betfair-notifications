@@ -34,16 +34,18 @@ class Hash
   def merge_projections!
     merge!({:priceProjection => {:priceData => ['EX_BEST_OFFERS']}})
   end
+  def message; "selection id #{self['selectionId']}"; end
   def lay_prices; self['ex']['availableToLay']; end
 end
 
 class String
   def self.header(title)
+    @chars = 81 - title.size
     line + title + line
   end
 
   def self.line
-    "-"*30
+    "-"*(@chars/2)
   end
 end
 
