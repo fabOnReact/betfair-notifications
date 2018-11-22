@@ -20,5 +20,6 @@ module CustomMessage
   CATALOG_EVENTS = {key: '-e',longKey: '--eventIds IDs',text: CATALOG_EVENT_OPT, field: :eventsIds}  
   BOOK_MARKET = {key: '-m',longKey: '--marketIds IDs',text: BOOK_MARKET_OPT, field: :marketIds} 
   MONITOR_SELECTION = {key: '-s',longKey: '--selectionIDs IDs',text: MONITOR_SELECTION_OPT, field: :selectionIds}
+  EVENTS_PARSER = [EVENTS_COUNTRIES, EVENTS_TEXT]
   CMD_DESCRIPTIONS = [EVENTS_CMD_DESCRIPTION, CATALOG_CMD_DESCRIPTION, BOOK_CMD_DESCRIPTION]
 end

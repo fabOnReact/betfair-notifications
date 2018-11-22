@@ -1,14 +1,14 @@
 class Report
-  def initialize(data); @data = data; end
+  def initialize(model); @model = model; end
   def events_report
     tp events.flat_structure, :id, :name, :countryCode, :timezone, :marketCount
   end
 
   %w(events catalog books filter).each do |method|
-    class_eval "def #{method}; @data.#{method}; end"
+    class_eval "def #{method}; @model.#{method}; end"
   end
 
-  def runners; @runners = @data.runners; end
+  def runners; @runners = @model.runners; end
   # betfair book -m 1.149127014 
   def books_report
     raise ArgumentError, "MarketId is required to query the book api" if filter[:marketIds].nil?
@@ -31,17 +31,17 @@ class Report
 
   # betfair monitor -m 1.149127014 -s 31162,10372411   
   def monitor
-    raise ArgumentError, "Market and RunnerIds are required to monitor runners" if @filter[:marketIds].nil? || @filter[:selectionIds].nil?
-    loop do
-      sleep @filter[:minutesInterval].minutes
-      books
-    end
+    # byebug
+    raise ArgumentError, "Market and RunnerIds are required to monitor runners" if filter[:marketIds].nil? || filter[:selectionIds].nil?
+    # ensure books is updates 
+    puts "Level Reached!" if notify? 
+    puts "some message"
+    byebug
   end
   
-  def verify_prices; 
-  end 
-
-  def notify?; @filter[:targetPrice] <= max_price; end
-  def max_price; @books.first["runners"].filter_by(selection_id).to_lay; end
-  def selection_id; @filter[:selectionId].to_i; end
+  def notify?; filter[:targetPrice] <= max_price; end
+  def max_price;
+    # byebug; 
+    books.first["runners"].filter_by(selection_id).to_lay; end
+  def selection_id; filter[:selectionIds].first.to_i; end
 end

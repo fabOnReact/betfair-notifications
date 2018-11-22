@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'report'
 
 describe Report do 
   let(:client) { FactoryBot.build(:client) }
@@ -11,7 +10,7 @@ describe Report do
   end
 
   describe '#books' do 
-    let(:model) { Model.new(client, {marketIds: ['1.149127014']}, 1000) }
+    let(:model) { FactoryBot.build(:books_model) }
     let(:report) { Report.new(model) } 
     it 'retrieve the books' do
       expect(report.books.size).to be 1 
@@ -21,22 +20,19 @@ describe Report do
   end
 
   describe '#monitor' do 
-    let(:model) { Model.new(client, {marketIds: ['1'], selectionId: '2', targetPrice: 4, minutesInterval: 4}, 1000) }
-    let(:report) { Report.new(model) }
-
-    it 'repeat the call until the target is reached'
-    #   t1 = double('t1'); t2 = double('t2');
-    #   expect(report.notify?).to be false
-    # end
+    # let(:custom_parser) { FactoryBot.build(:custom_parser, filter: {marketIds: ['1'], selectionId: '2', targetPrice: 4, minutesInterval: 4}) }
+    let(:custom_parser) { FactoryBot.build(:monitor_parser) }
+    let(:model) {  Model.new(client, custom_parser) }
+    let(:report) { Report.new(model) } 
 
     describe '#notify?' do
-      it 'compares the prices to the target' 
-      #   books = double('books') 
-      #   allow(client).to receive_message_chain(:list_market_book).and_return(books)
-      #   allow(report).to receive(:max_price).and_return(5)
-      #   report.books
-      #   expect(report.notify?).to be true
-      # end
+      it 'compares the prices to the target' do
+        books = double('books') 
+        allow(client).to receive_message_chain(:list_market_book).and_return(books)
+        allow(report).to receive(:max_price).and_return(5)
+        report.books
+        expect(report.notify?).to be true
+      end
     end
   end
 end

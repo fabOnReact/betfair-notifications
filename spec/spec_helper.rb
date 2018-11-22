@@ -1,14 +1,13 @@
 PROJECT_ROOT = File.expand_path("../..", __FILE__)
+$LOAD_PATH << PROJECT_ROOT
 
+require 'active_support/all'
 require 'factory_bot'
 require 'byebug'
 require 'optparse'
 require 'betfair'
-# require_relative '../lib/client.rb'
-
-Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each do |file|
-  require file
-end
+require 'lib/concerns/custom_message'
+Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require file }
 
 HTTPI.log = false
 

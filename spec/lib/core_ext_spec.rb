@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'core_ext'
 
 describe Array do
   let(:array) { [{"event" => {'key' => '1'},'marketCount' => '2'},{"event" => {'key' => '1'},'marketCount' => '2'}] }
@@ -42,8 +41,7 @@ end
 describe String do
   describe '.header' do 
     it 'create a string of header' do 
-      header = "-"*30 + "title" + "-"*30
-      expect(String.header("title")).to eql header
+      expect(String.header("title").size).to be 81 
     end
   end
 end

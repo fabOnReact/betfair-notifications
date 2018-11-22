@@ -3,4 +3,3 @@
 3. run setup
 4. add your credentials as env variable in bash_profile
 5. 3 credentials for username, password and application key
-6. env variable to add the folder at the load path

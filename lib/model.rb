@@ -9,6 +9,7 @@ class Model
   def events; @events = @client.list_events({:filter => @filter}); end
 
   def books
+    puts "@books variable is updated"
     @books = @client.list_market_book(@filter.merge_projections!)
   end
 

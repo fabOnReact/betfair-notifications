@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-$LOAD_PATH << ENV["BETFAIR_REPO"]
+PROJECT_ROOT = File.expand_path("../..", __FILE__)
+$LOAD_PATH << PROJECT_ROOT 
 
 require 'active_support/all'
 require 'optparse'
@@ -7,15 +8,12 @@ require 'table_print'
 require 'betfair'
 require 'byebug'
 require 'lib/concerns/custom_message'
-Dir[File.join(__dir__, "..", "lib", "*.rb")].each {|file| require file }
+Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require file }
 
 HTTPI.log = false
 
-# filter = {}
-# maxResults = 1000
-# move to reparate file or own object
 custom_parser = CustomParser.new do |parser|
-  parser.banner = CustomParser::BETFAIR_CMD # "Usage: betfair COMMAND [OPTIONS]"
+  parser.banner = CustomParser::BETFAIR_CMD 
   parser.separator ""
   
   parser.separator "Commands"
@@ -23,53 +21,28 @@ custom_parser = CustomParser.new do |parser|
 
   parser.separator "Options"
   parser.separator "betfair events"
-  parser.capture_input CustomParser::EVENTS_COUNTRIES
-  #parser.on("-c", "--countries COUNTRIES", CustomParser::EVENTS_COUNTRY_OPT ) do |countries|
-  #  @filter[:marketCountries] = countries.split(",")
-  #end
-  parser.on('-q', '--textQuery TEXT', CustomParser::EVENTS_TEXT_OPT) do |text|
-    @filter[:textQuery] = text
-  end
-  parser.separator CustomParser::EVENTS_IDS_OPT
+
+  # parser.events_options
+  parser.capture_input(CustomParser::EVENTS_COUNTRIES){|string| string.split(',')}
+  parser.capture_input CustomParser::EVENTS_TEXT
+  
+  parser.separator CustomParser::EVENTS_COUNTRY_OPT
   parser.separator ''
 
   parser.separator 'betfair catalog'
-  parser.on('-x', '--maxResults INTEGER', CustomParser::CATALOG_INTEGER_OPT) do |integer|
-    @maxResults = integer
-  end 
+  parser.capture_input CustomParser::CATALOG_RESULTS
   parser.separator CustomParser::CATALOG_MARKET_OPT
-  parser.on('-e', '--eventIds IDs', CustomParser::CATALOG_EVENT_OPT) do |ids|
-    @filter[:eventIds] = ids.split(',')
-  end
+  parser.capture_input(CustomParser::CATALOG_EVENTS) {|string| string.split(',')}
   parser.separator ''
 
   parser.separator 'betfair book'
-  parser.on('-m', '--marketIds IDs', CustomParser::BOOK_MARKET_OPT) do |ids|
-    @filter[:marketIds] = ids.split(',')
-  end
+  parser.capture_input(CustomParser::BOOK_MARKET) {|string| string.split(',')}
   parser.separator ''
 
   parser.separator 'betfair monitor'
   parser.separator CustomParser::MONITOR_EVENTS_OPT
-  parser.on('-s', '--selectionIDs IDs', CustomParser::MONITOR_SELECTION_OPT) do |ids|
-    @filter[:selectionIds] = ids.split(',')
-  end
+  parser.capture_input(CustomParser::MONITOR_SELECTION){|string| string.split(',')}
 end
 
 custom_parser.parse!
-
-# move to controller
-client = Client.new(ENV['BETFAIR_EMAIL'],ENV['BETFAIR_PW'], ENV['BETFAIR_APPLICATION_CODE'])
-data = Model.new(client, custom_parser)
-case ARGV[0]
-when "events"
-  Report.new(data).events_report
-when 'catalog'
-  Report.new(data).catalog_report
-when 'book'
-  Report.new(data).books_report
-when 'monitor'
-  Report.new(data).monitor
-else
-  puts opt_parser
-end
+ApplicationController.new(ARGV[0], custom_parser)
