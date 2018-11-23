@@ -6,8 +6,10 @@ require 'factory_bot'
 require 'byebug'
 require 'optparse'
 require 'betfair'
-require 'lib/concerns/custom_message'
+require 'lib/concerns/parser_message'
+require 'lib/concerns/error_message'
 Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require file }
+Dir.glob(File.join(PROJECT_ROOT, "lib", "core_ext", "*.rb")).each {|file| require file }
 
 HTTPI.log = false
 

@@ -28,8 +28,9 @@ describe Report do
     describe '#notify?' do
       it 'compares the prices to the target' do
         books = double('books') 
-        allow(client).to receive_message_chain(:list_market_book).and_return(books)
+        allow(client).to receive(:list_market_book).and_return(books)
         allow(report).to receive(:max_price).and_return(5)
+        allow(model).to receive(:targetPrice).and_return(4)
         report.books
         expect(report.notify?).to be true
       end

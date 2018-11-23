@@ -1,5 +1,5 @@
 # CustomMessage module includes only text
-module CustomMessage
+module ParserMessage
   attr_accessor :filter, :maxResults
   BETFAIR_CMD = %(Usage: betfair COMMAND [OPTIONS])
   EVENTS_CMD_DESCRIPTION = "    events: Returns a list of Events (i.e, Reading vs. Man United) associated with the markets selected by the MarketFilter. example: betfair events available options" 
@@ -20,6 +20,10 @@ module CustomMessage
   CATALOG_EVENTS = {key: '-e',longKey: '--eventIds IDs',text: CATALOG_EVENT_OPT, field: :eventsIds}  
   BOOK_MARKET = {key: '-m',longKey: '--marketIds IDs',text: BOOK_MARKET_OPT, field: :marketIds} 
   MONITOR_SELECTION = {key: '-s',longKey: '--selectionIDs IDs',text: MONITOR_SELECTION_OPT, field: :selectionIds}
-  EVENTS_PARSER = [EVENTS_COUNTRIES, EVENTS_TEXT]
+  MONITOR_TARGET_OPT = 'Target price at which the program will trigger an alert. Numeric argument. example: betfair monitor -t 5'
+  MONITOR_TARGET = {key: '-t',longKey: '--targetPrice INTEGER',text: MONITOR_TARGET_OPT, field: :targetPrice}
+  MONITOR_MINUTES_OPT = 'Minutes Interval for monitoring prices. Numeric argument. example: betfair monitor -i 5'
+  MONITOR_MINUTES = {key: '-i',longKey: '--minutesInterval INTEGER',text: MONITOR_MINUTES_OPT, field: :minutesInterval}
+  # EVENTS_PARSER = [EVENTS_COUNTRIES, EVENTS_TEXT]
   CMD_DESCRIPTIONS = [EVENTS_CMD_DESCRIPTION, CATALOG_CMD_DESCRIPTION, BOOK_CMD_DESCRIPTION]
 end

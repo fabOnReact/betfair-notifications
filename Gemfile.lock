@@ -35,6 +35,8 @@ GEM
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
     socksify (1.7.1)
+    sucker_punch (2.1.1)
+      concurrent-ruby (~> 1.0)
     table_print (1.5.6)
     thor (0.20.3)
     thread_safe (0.3.6)
@@ -52,6 +54,7 @@ DEPENDENCIES
   rake
   rspec
   rspec-mocks
+  sucker_punch (~> 2.0)
   table_print
   thor
 

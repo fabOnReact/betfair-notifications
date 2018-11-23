@@ -1,15 +1,16 @@
 class Model
-  attr_reader :books, :filter, :catalog, :events
-  def initialize(client, custom_parser)
+  attr_reader :books, :filter, :catalog, :events, :targetPrice, :maxResults, :logMessage
+  def initialize(client, parser)
     @client = client
-    @filter = custom_parser.filter
-    @maxResults = custom_parser.maxResults
+    @filter = parser.filter
+    @targetPrice = parser.targetPrice
+    @maxResults = parser.maxResults
+    @logMessage = parser.logMessage
   end
 
   def events; @events = @client.list_events({:filter => @filter}); end
 
   def books
-    puts "@books variable is updated"
     @books = @client.list_market_book(@filter.merge_projections!)
   end
 

@@ -14,15 +14,9 @@ class ApplicationController
     when 'book'
       Report.new(@model).books_report
     when 'monitor'
-      report = Report.new(@model).monitor
-      fork do
-        Process.setsid
-        sleep parser.filter[:minutesInterval].minutes
-        # report.monitor
-        puts "In daemon"
-      end
+      # @report = Report.new(@model)
+      ReportJob.perform_async(@model)
     else
-      # byebug
       puts parser
     end
   end
