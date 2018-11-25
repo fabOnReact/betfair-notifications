@@ -14,8 +14,10 @@ class ApplicationController
     when 'book'
       Report.new(@model).books_report
     when 'monitor'
-      # @report = Report.new(@model)
-      ReportJob.perform_async(@model)
+      pid = fork do 
+        Report.new(@model).monitor
+      end
+      puts "process is in background id #{pid}"
     else
       puts parser
     end

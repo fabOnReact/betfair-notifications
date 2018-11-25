@@ -5,3 +5,4 @@ https://stackoverflow.com/questions/5380671/getting-the-warning-insecure-world-w
 3. run setup
 4. add your credentials as env variable in bash_profile
 5. 3 credentials for username, password and application key
+6. you have a maximum of 12 workers to run reports jobs asyncronously but you can increase them in the file ./lib/jobs/report_job.rb

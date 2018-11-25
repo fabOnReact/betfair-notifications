@@ -1,5 +1,5 @@
 PROJECT_ROOT = File.expand_path("../..", __FILE__)
-$LOAD_PATH << PROJECT_ROOT
+# $LOAD_PATH << PROJECT_ROOT
 
 require 'active_support/all'
 require 'factory_bot'
@@ -8,8 +8,8 @@ require 'optparse'
 require 'betfair'
 require 'lib/concerns/parser_message'
 require 'lib/concerns/error_message'
-Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require file }
-Dir.glob(File.join(PROJECT_ROOT, "lib", "core_ext", "*.rb")).each {|file| require file }
+Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require_relative file }
+Dir.glob(File.join(PROJECT_ROOT, "lib", "core_ext", "*.rb")).each {|file| require_relative file }
 
 HTTPI.log = false
 

@@ -1,11 +1,11 @@
 class Model
-  attr_reader :books, :filter, :catalog, :events, :targetPrice, :maxResults, :logMessage
+  attr_reader :books, :filter, :catalog, :events, :targetPrice, :maxResults, :minutesInterval
   def initialize(client, parser)
     @client = client
     @filter = parser.filter
     @targetPrice = parser.targetPrice
+    @minutesInterval = parser.minutesInterval
     @maxResults = parser.maxResults
-    @logMessage = parser.logMessage
   end
 
   def events; @events = @client.list_events({:filter => @filter}); end

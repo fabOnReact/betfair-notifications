@@ -1,18 +1,25 @@
 #!/usr/bin/env ruby
-PROJECT_ROOT = File.expand_path("../..", __FILE__)
-$LOAD_PATH << PROJECT_ROOT 
+# PROJECT_ROOT = File.expand_path("../..", __FILE__)
+PROJECT_ROOT = "/home/fabrizio/Documents/Sublime/Rails/betfair-notifications/" 
+# $LOAD_PATH << PROJECT_ROOT 
 
 require 'active_support/all'
+# require 'sucker_punch'
+# require 'sucker_punch/async_syntax'
+# require 'sucker_punch-backgroundable'
 require 'optparse'
 require 'table_print'
 require 'betfair'
 require 'byebug'
-require 'lib/concerns/parser_message'
-require 'lib/concerns/error_message'
-Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require file }
-Dir.glob(File.join(PROJECT_ROOT, "lib", "core_ext", "*.rb")).each {|file| require file }
+require_relative '../lib/concerns/parser_message'
+require_relative '../lib/concerns/error_message'
+require_relative '../lib/jobs/report_job'
+Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require_relative file }
+Dir.glob(File.join(PROJECT_ROOT, "lib", "core_ext", "*.rb")).each {|file| require_relative file }
 
 HTTPI.log = false
+# SuckerPunch.logger = Logger.new('sucker_punch.log')
+# SuckerPunch.shutdown_timeout = 100000 # of sec. to wait before killing threads
 
 custom_parser = CustomParser.new do |parser|
   parser.banner = CustomParser::BETFAIR_CMD 
