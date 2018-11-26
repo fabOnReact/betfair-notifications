@@ -1,6 +1,18 @@
 I recorded a video on how to install the project
 
+https://youtu.be/sgbJxjB_-u8
+
+I also recorded a video explaining the main functionalities
+
+https://youtu.be/vTP6vdUoVC0
+
 1. install the project
+
+clone the project 
+
+```
+git clone https://github.com/fabriziobertoglio1987/betfair-notifications.git
+```
 
 [The following post explains how to configure the symlink of a ruby script.](https://commandercoriander.net/blog/2013/02/16/making-a-ruby-script-executable/)
 
@@ -21,7 +33,7 @@ export BETFAIR_APPLICATION_CODE="your-app-code"
 export PROJECT_ROOT='root/to/your/folder'
 ```
 
-2. install ruby version 2.2.1 
+2. install ruby version 2.2.5 
 more information are available at rbenv 
 https://github.com/rbenv/rbenv
 
@@ -29,8 +41,8 @@ the steps once rbenv is installed should be:
 
 ```terminal
 cd /path/to/your/files/directory
-rbenv install 2.2.1
-rbenv local 2.2.1
+rbenv install 2.2.5
+rbenv local 2.2.5
 ```
 3. run setup
 
