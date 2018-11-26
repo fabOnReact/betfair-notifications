@@ -39,8 +39,10 @@ cd /to/your/project/folder
 bin/setup
 ```
 
-4. if you want to use 2 factor you need to add 3 environment variables, details are included at 
-https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/Non-Interactive+%28bot%29+login
+4. if you want to use 2 factor you need to add 3 environment variables,[details are included at](https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/Non-Interactive+%28bot%29+login)
+
+```
 ENV['two-factor'] ='true'
 ENV['cert_key_file_path']
 ENV['cert_file_path']
+```
