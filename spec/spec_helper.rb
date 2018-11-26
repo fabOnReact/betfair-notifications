@@ -12,6 +12,7 @@ Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require_relative f
 Dir.glob(File.join(PROJECT_ROOT, "lib", "core_ext", "*.rb")).each {|file| require_relative file }
 
 HTTPI.log = false
+ENV['two_factor'] = ''
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
