@@ -5,10 +5,6 @@ describe Report do
   let(:model) { FactoryBot.build(:model) }
   let(:report) { FactoryBot.build(:report) }
 
-  describe 'attr_readers' do 
-    it ''
-  end
-
   describe '#books' do 
     let(:model) { FactoryBot.build(:books_model) }
     let(:report) { Report.new(model) } 

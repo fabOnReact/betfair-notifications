@@ -58,11 +58,5 @@ describe Client do
       german_events = client.list_events({filter: {marketCountries: ['DE']}})
       expect(german_events.first["event"]["countryCode"]).to eql("DE")
     end
-
-    it 'filter events based on a text query' do 
-      brazil_events = client.list_events({filter: {textQuery: "Brazil"}})
-      name = brazil_events.first["event"]["name"]
-      expect(name).to match /Brazil/
-    end
   end
 end

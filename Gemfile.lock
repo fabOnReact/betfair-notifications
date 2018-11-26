@@ -22,7 +22,6 @@ GEM
     minitest (5.11.3)
     rack (1.6.11)
     rake (10.3.2)
-    require_all (2.0.0)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -50,7 +49,6 @@ DEPENDENCIES
   byebug
   factory_bot
   rake
-  require_all
   rspec
   rspec-mocks
   table_print
