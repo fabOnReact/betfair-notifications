@@ -10,6 +10,10 @@ describe Client do
     it 'perform the interactive login' do 
       expect(client.persistent_headers["X-Authentication"]).to be_present
     end
+
+    it 'perform the interactive login' do 
+      expect(client.persistent_headers["X-Authentication"]).to be_present
+    end
   end
 
   describe '#list_market_catalogue' do

@@ -22,6 +22,7 @@ GEM
     minitest (5.11.3)
     rack (1.6.11)
     rake (10.3.2)
+    require_all (2.0.0)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -35,12 +36,7 @@ GEM
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
     socksify (1.7.1)
-    sucker_punch (2.1.1)
-      concurrent-ruby (~> 1.0)
-    sucker_punch-backgroundable (0.3.1)
-      sucker_punch (~> 2.0)
     table_print (1.5.6)
-    thor (0.20.3)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -54,12 +50,10 @@ DEPENDENCIES
   byebug
   factory_bot
   rake
+  require_all
   rspec
   rspec-mocks
-  sucker_punch (~> 2.0)
-  sucker_punch-backgroundable
   table_print
-  thor
 
 BUNDLED WITH
    1.16.6

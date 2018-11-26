@@ -1,8 +1,46 @@
-1. install the project 
-1. add betfair/bin directory to your environment variable. it needs to be not in the home folder, otherwise this error is triggered
-https://stackoverflow.com/questions/5380671/getting-the-warning-insecure-world-writable-dir-home-chance-in-path-mode-04#5395932
+I recorded a video on how to install the project
+
+1. install the project
+
+[The following post explains how to configure the symlink of a ruby script.](https://commandercoriander.net/blog/2013/02/16/making-a-ruby-script-executable/)
+
+The project needs to be copied in your home directory, then a symlink to the project bin/betfair needs to be created. The above page includes more details. 
+
+The following environment variable needs to be saved in `~/.bash_profile`. It will include:
+
+Your Email
+Your password
+Your App code
+The path to the directory including all the files. 
+
+```terminal
+# Betfair
+export BETFAIR_EMAIL="your-email"
+export BETFAIR_PW="your-password"
+export BETFAIR_APPLICATION_CODE="your-app-code"
+export PROJECT_ROOT='root/to/your/folder'
+```
+
 2. install ruby version 2.2.1 
+more information are available at rbenv 
+https://github.com/rbenv/rbenv
+
+the steps once rbenv is installed should be:
+
+```terminal
+cd /path/to/your/files/directory
+rbenv install 2.2.1
+rbenv local 2.2.1
+```
 3. run setup
-4. add your credentials as env variable in bash_profile
-5. 3 credentials for username, password and application key
-6. you have a maximum of 12 workers to run reports jobs asyncronously but you can increase them in the file ./lib/jobs/report_job.rb
+
+```terminal
+cd /to/your/project/folder
+bin/setup
+```
+
+4. if you want to use 2 factor you need to add 3 environment variables, details are included at 
+https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/Non-Interactive+%28bot%29+login
+ENV['two-factor'] ='true'
+ENV['cert_key_file_path']
+ENV['cert_file_path']

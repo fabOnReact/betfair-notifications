@@ -6,8 +6,8 @@ require 'factory_bot'
 require 'byebug'
 require 'optparse'
 require 'betfair'
-require 'lib/concerns/parser_message'
-require 'lib/concerns/error_message'
+require_relative '../lib/concerns/parser_message'
+require_relative '../lib/concerns/error_message'
 Dir.glob(File.join(PROJECT_ROOT, "lib", "*.rb")).each {|file| require_relative file }
 Dir.glob(File.join(PROJECT_ROOT, "lib", "core_ext", "*.rb")).each {|file| require_relative file }
 

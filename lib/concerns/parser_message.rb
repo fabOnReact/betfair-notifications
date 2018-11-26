@@ -17,7 +17,7 @@ module ParserMessage
   EVENTS_COUNTRIES = {key: "-c",longKey: "--countries COUNTRIES",text: EVENTS_COUNTRY_OPT, field: :marketCountries}
   EVENTS_TEXT = {key: '-q',longKey: '--textQuery TEXT',text: EVENTS_TEXT_OPT, field: :textQuery}
   CATALOG_RESULTS = {key: '-x',longKey: '--maxResults INTEGER',text: CATALOG_INTEGER_OPT, field: :maxResults}
-  CATALOG_EVENTS = {key: '-e',longKey: '--eventIds IDs',text: CATALOG_EVENT_OPT, field: :eventsIds}  
+  CATALOG_EVENTS = {key: '-e',longKey: '--eventIds IDs',text: CATALOG_EVENT_OPT, field: :eventIds}  
   BOOK_MARKET = {key: '-m',longKey: '--marketIds IDs',text: BOOK_MARKET_OPT, field: :marketIds} 
   MONITOR_SELECTION = {key: '-s',longKey: '--selectionIDs IDs',text: MONITOR_SELECTION_OPT, field: :selectionIds}
   MONITOR_TARGET_OPT = 'Target price at which the program will trigger an alert. Numeric argument. example: betfair monitor -t 5'

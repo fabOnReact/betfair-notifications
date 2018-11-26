@@ -22,5 +22,6 @@ class Model
   
   def catalog
     @catalog = @client.list_market_catalogue({:filter => catalog_filter,:maxResults => @maxResults,:marketProjection => ["RUNNER_DESCRIPTION","EVENT"]})
+    # puts @catalog
   end
 end
