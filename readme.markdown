@@ -47,6 +47,12 @@ rbenv install 2.2.5
 rbenv local 2.2.5
 ```
 
+Also you should set the global version of `rbenv` to `2.2.5` with 
+
+```
+rbenv global 2.2.5
+```
+
 ### Install the project
 1. run setup
 
