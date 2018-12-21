@@ -1,13 +1,13 @@
-I recorded a video on how to install the project
+# Betfair API Notifications
+## Description
 
-https://youtu.be/sgbJxjB_-u8
+Command Line Application to interact with the Betfair api. Watch [a video explaining the main functionalities](https://youtu.be/vTP6vdUoVC0). The Betfair CLI allows you to retrieve information via command line from the Betfair API and monitor price fluctuations of matches. It uses the [ruby-betfair gem](https://github.com/mikecmpbll/betfair) and the [betfair api](https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/Getting+Started).
 
-I also recorded a video explaining the main functionalities
+[Video instruction on installation here](https://youtu.be/sgbJxjB_-u8).
 
-https://youtu.be/vTP6vdUoVC0
+## Installation
 
-1. install the project
-
+### Clone the Project
 clone the project 
 
 ```
@@ -33,7 +33,9 @@ export BETFAIR_APPLICATION_CODE="your-app-code"
 export PROJECT_ROOT='root/to/your/folder'
 ```
 
-2. install ruby version 2.2.5 
+### Ruby Version Installation
+
+Install ruby version 2.2.5 
 more information are available at rbenv 
 https://github.com/rbenv/rbenv
 
@@ -44,14 +46,23 @@ cd /path/to/your/files/directory
 rbenv install 2.2.5
 rbenv local 2.2.5
 ```
-3. run setup
+
+Also you should set the global version of `rbenv` to `2.2.5` with 
+
+```
+rbenv global 2.2.5
+```
+
+### Install the project
+1. run setup
 
 ```terminal
 cd /to/your/project/folder
 bin/setup
 ```
 
-4. if you want to use 2 factor you need to add 3 environment variables,[details are included at the following link](https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/Non-Interactive+%28bot%29+login)
+2. if you want to use 2 factor you need to add 3 environment variables,[details are included at the following link](https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/Non-Interactive+%28bot%29+login)
+This environment variables are actually written downcase ('two_factor'). I should update this in a later commit.
 
 ```
 ENV['two_factor'] ='true'
