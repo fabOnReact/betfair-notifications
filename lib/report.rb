@@ -51,6 +51,6 @@ class Report
   end
 
   def notify?; targetPrice <= max_price; end
-  def max_price; books.first["runners"].filter_by(selection_id).lay_prices.maximum; end
+  def max_price; books.first["runners"].filter_by(selection_id).lay_prices.maximum; end 
   def selection_id; filter[:selectionIds].first.to_i; end
 end
