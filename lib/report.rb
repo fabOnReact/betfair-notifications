@@ -50,13 +50,7 @@ class Report
     filter[:marketIds].nil? || filter[:selectionIds].nil? || targetPrice.nil? || maxResults.nil?
   end
 
-  def notify?; 
-    true
-    #@counter += 1; 
-    #targetPrice <= max_price;
-    #@counter == 3; 
-  end
-
+  def notify?; targetPrice <= max_price; end
   def max_price; books.first["runners"].filter_by(selection_id).lay_prices.maximum; end
   def selection_id; filter[:selectionIds].first.to_i; end
 end
